@@ -1,5 +1,9 @@
+import email
+from email import message
 from django.shortcuts import render
 from django.http.response import HttpResponse
+
+from .models import Contact
 
 # with open('user.txt','r') as file:
 #     doc = file.read()
@@ -17,7 +21,8 @@ def contact_us(request):
         request_data = dict(request.POST)
         request_data.pop('csrfmiddlewaretoken')
         data = {key:request_data.get(key)[0] for key in request_data}
-        print(data)
+        Contact.objects.create(name=data["my_name"], email=data["my_email"], message=data["my_message"])
+        # print(data)
     # with open('user.txt', 'w') as file:
     #     file.write(f'{user}')    
     #   print(request.POST)
